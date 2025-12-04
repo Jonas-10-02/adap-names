@@ -8,6 +8,10 @@ export class Directory extends Node {
         super(bn, pn);
     }
 
+    public getChildNodes(): Set<Node> {
+        return this.childNodes;
+    }
+
     public hasChildNode(cn: Node): boolean {
         return this.childNodes.has(cn);
     }
@@ -20,4 +24,15 @@ export class Directory extends Node {
         this.childNodes.delete(cn); // Yikes! Should have been called remove
     }
 
+
+    public override findNodes(bn: string, visited: Set<Node> = new Set<Node>()): Set<Node> {
+        const result = super.findNodes(bn, visited);
+
+        for (const child of this.getChildNodes()) {
+            for (const matching of child.findNodes(bn, visited)){
+                result.add(matching);
+            }
+        }
+        return result;
+    }
 }

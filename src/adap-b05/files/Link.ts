@@ -35,4 +35,17 @@ export class Link extends Node {
         const result: Node = this.targetNode as Node;
         return result;
     }
+
+    public override findNodes(bn: string, visited: Set<Node> = new Set<Node>()): Set<Node> {
+        const result = super.findNodes(bn, visited);
+        const target = this.getTargetNode();
+
+        if (target && !visited.has(target)) {
+            visited.add(target);
+            for(const matching of target.findNodes(bn, visited)) {
+                result.add(matching);
+            }
+        }
+        return result;
+    }
 }

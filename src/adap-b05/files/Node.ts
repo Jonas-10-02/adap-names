@@ -1,5 +1,7 @@
+import { Exception } from "../common/Exception";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
+import { MethodFailedException } from "../common/MethodFailedException";
 
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
@@ -56,8 +58,24 @@ export class Node {
      * Returns all nodes in the tree that match bn
      * @param bn basename of node being searched for
      */
-    public findNodes(bn: string): Set<Node> {
-        throw new Error("needs implementation or deletion");
+    public findNodes(bn: string, visited: Set<Node> = new Set<Node>()): Set<Node> {
+        let result: Set<Node> = new Set<Node>();
+
+        // avoid link loops
+        if (visited.has(this)) {
+            return result;
+        }
+        visited.add(this);
+
+        let baseName: string = this.doGetBaseName();
+        if (baseName == "") {
+            throw new MethodFailedException("idk");
+        }
+        if (baseName === bn) {
+            result.add(this);
+        }
+
+        return result;
     }
 
 }
