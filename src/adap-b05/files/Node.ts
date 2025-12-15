@@ -2,6 +2,7 @@ import { Exception } from "../common/Exception";
 import { IllegalArgumentException } from "../common/IllegalArgumentException";
 import { InvalidStateException } from "../common/InvalidStateException";
 import { MethodFailedException } from "../common/MethodFailedException";
+import { FileNotFoundException } from "../errors/Errors";
 
 import { Name } from "../names/Name";
 import { Directory } from "./Directory";
@@ -69,7 +70,7 @@ export class Node {
 
         let baseName: string = this.doGetBaseName();
         if (baseName == "") {
-            throw new MethodFailedException("idk");
+            throw new FileNotFoundException(0,undefined,"Error");
         }
         if (baseName === bn) {
             result.add(this);

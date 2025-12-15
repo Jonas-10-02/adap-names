@@ -7,63 +7,86 @@ export class StringArrayName extends AbstractName {
     protected components: string[] = [];
 
     constructor(source: string[], delimiter?: string) {
-        super();
-        throw new Error("needs implementation or deletion");
+        super(delimiter);
+        this.components = source;
+        // this.assertClassInvariance(this);
     }
 
     public clone(): Name {
-        throw new Error("needs implementation or deletion");
+        return this.doClone();
     }
 
-    public asString(delimiter: string = this.delimiter): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public asDataString(): string {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEqual(other: Name): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getHashCode(): number {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public isEmpty(): boolean {
-        throw new Error("needs implementation or deletion");
-    }
-
-    public getDelimiterCharacter(): string {
-        throw new Error("needs implementation or deletion");
+    protected doClone(): Name {
+        let deepCopy: Name = new StringArrayName([], this.delimiter);
+        deepCopy.concat(this);
+        return deepCopy;
     }
 
     public getNoComponents(): number {
-        throw new Error("needs implementation or deletion");
+        return this.doGetNoComponents();
     }
 
+    protected doGetNoComponents(): number {
+        return this.components.length;
+    }
+
+   /* @methodtype get-method */
     public getComponent(i: number): string {
-        throw new Error("needs implementation or deletion");
+        // this.assertIsNotNullOrUndefined(i);
+        // this.assertIdxInsideBounds(i);
+        return this.doGetComponent(i);
     }
 
-    public setComponent(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+    protected doGetComponent(i: number): string {
+        return this.components[i];
     }
 
-    public insert(i: number, c: string) {
-        throw new Error("needs implementation or deletion");
+    /* @methodtype set-method */
+    public setComponent(i: number, c: string): void {
+        // this.assertIsNotNullOrUndefined(i);
+        // this.assertIsNotNullOrUndefined(c);
+        // this.assertIdxInsideBounds(i);
+        this.doSetComponent(i,c);
+        // this.assertClassInvariance(this);
     }
 
-    public append(c: string) {
-        throw new Error("needs implementation or deletion");
+    protected doSetComponent(i: number, c: string): void {
+        this.components[i] = c;
     }
 
-    public remove(i: number) {
-        throw new Error("needs implementation or deletion");
+    /* @methodtype set-method */
+    public insert(i: number, c: string): void {
+        // this.assertIsNotNullOrUndefined(i);
+        // this.assertIsNotNullOrUndefined(c);
+        // this.assertIdxInsideBounds(i);
+        this.doInsert(i,c);
+        // this.assertClassInvariance(this);
     }
 
-    public concat(other: Name): void {
-        throw new Error("needs implementation or deletion");
+    protected doInsert(i: number, c: string): void {
+        this.components.splice(i,0,c);
+    }
+
+    /* @methodtype set-method */
+    public append(c: string): void {
+        // this.assertIsNotNullOrUndefined(c);
+        this.doAppend(c);
+        // this.assertClassInvariance(this);
+    }
+
+    protected doAppend(c: string): void {
+        this.components.push(c);
+    }
+
+    /* @methodtype set-method */
+    public remove(i: number): void {
+        // this.assertIsNotNullOrUndefined(i);
+        // this.assertIdxInsideBounds(i);
+        this.doRemove(i);
+        // this.assertClassInvariance(this);
+    }
+
+    protected doRemove(i: number): void {
+        this.components.splice(i,1);
     }
 }
